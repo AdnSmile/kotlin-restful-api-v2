@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  kotlin-restful-api2:
+    build:
+      dockerfile: Dockerfile
+    container_name: kotlin_restful_api2
+    image: kotlin-restful-api:0.0.1
+    ports:
+      - 8080:8080
+    environment:
+      DATABASE_USERNAME: kotlin
+      DATABASE_PASSWORD: kotlin
+      DATABASE_URL: jdbc:postgresql://kotlin-restful-api:5432/restful-api
+    depends_on:
+      - kotlin-restful-api
+  kotlin-restful-api:
+    container_name: kotlin-restful-api
+    image: postgres:latest
+#    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: kotlin
+      POSTGRES_PASSWORD: kotlin
+      POSTGRES_DB: restful-api
+volumes:
+  postgres:
+
+# run nya -> docker-compose -f docker-compose.yml up -d
